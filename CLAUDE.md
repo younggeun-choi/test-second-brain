@@ -38,7 +38,7 @@ eenaie-second-brain/
 │       └── queries/         저장할 가치가 있는 질의 결과
 ├── 4-Archive/       완료/폐기
 ├── Templates/       PARA 노트 스캐폴드 (순수 markdown)
-├── .claude/commands/  slash command: capture·ingest·query·lint·save
+├── .claude/commands/  slash command: capture·braindump·ingest·query·lint·save
 └── CLAUDE.md        (이 파일)
 ```
 
@@ -75,18 +75,22 @@ vault는 규칙이 다른 **두 영역**으로 나뉜다.
 
 ## 5. Slash Commands
 
-`.claude/commands/`의 5개 워크플로 동사. SCHEMA를 운영 스펙으로 참조한다.
+`.claude/commands/`의 6개 워크플로 동사. SCHEMA를 운영 스펙으로 참조한다.
 
 | 커맨드 | 역할 | 방향 |
 |--------|------|------|
-| `/capture` | URL/텍스트 → `wiki/raw/` 또는 `2-Areas/` 보존 | 입력 캡처 (ingest 아님) |
+| `/capture` | 외부 URL/파일 → `wiki/raw/` 원문 보존 | 소스 캡처 (ingest 아님) |
+| `/braindump` | 생각·메모 → 분류·분석해 `2-Areas/braindumps/` 등에 구조화 | 생각 캡처 |
 | `/ingest` | `raw/` backlog → durable wiki 페이지 승격 | 지식 통합 |
 | `/query` | Brain-First wiki 우선 질의 응답 | 회상 |
 | `/lint` | wiki health check (SCHEMA §9) | 점검 |
 | `/save` | 명시적으로 요청된 세션 산출물 저장 | 보존 |
 
-**capture는 raw/braindump 저장에서 끝난다.** durable wiki 승격은 별개 단계이고
-`/ingest`가 담당한다 — 이 분리가 패턴의 핵심이다.
+**입력은 두 갈래다:** 외부 소스(URL/파일)는 `/capture`로 `wiki/raw/`에, 내 생각·
+메모는 `/braindump`로 PARA에. 둘 다 **원문 보존에서 끝난다** — durable wiki 승격은
+별개 단계이고 `/ingest`가 담당한다. 이 분리가 패턴의 핵심이다. braindump은 단일
+1인칭 소스라 첫 캡처에서 wiki로 승격하지 않는다(SCHEMA §8, `wiki_bridge_status:
+deferred`).
 
 ## 6. Git 컨벤션
 

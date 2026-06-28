@@ -1,6 +1,6 @@
 ---
-description: URL 또는 텍스트를 wiki/raw/ 또는 2-Areas/braindumps/ 에 원문 보존 (ingest 아님)
-argument-hint: <URL 또는 캡처할 텍스트>
+description: URL/파일을 wiki/raw/ 에 원문 보존 (ingest 아님 · 생각·메모는 /braindump)
+argument-hint: <URL>
 allowed-tools: Read, Write, Bash(shasum:*), Bash(date:*), WebFetch
 ---
 
@@ -18,8 +18,9 @@ $ARGUMENTS
 1. **분류한다.**
    - 입력이 URL이면 → 소스 캡처. (arxiv.org → `raw/papers/`, youtube/threads/x
      같은 영상·SNS → `raw/transcripts/`, 그 외 일반 웹 → `raw/articles/`)
-   - 입력이 자유 텍스트(생각·메모)면 → `2-Areas/braindumps/`에 저장.
-     폴더가 없으면 만든다.
+   - 입력이 자유 텍스트(생각·메모)면 → **이 커맨드의 영역이 아니다.**
+     "생각·메모는 `/braindump`로 처리하세요"라고 안내하고 멈춘다. (capture는
+     외부 소스의 원문 보존 전용)
 
 2. **URL인 경우:**
    - `WebFetch`로 본문을 가져와 읽을 수 있는 markdown으로 추출(보일러플레이트
@@ -43,13 +44,8 @@ $ARGUMENTS
    - **dedup:** 저장 전, 같은 sha256을 가진 raw 파일이 이미 있는지 확인.
      있으면 새로 쓰지 말고 "이미 캡처됨"이라고 보고.
 
-3. **자유 텍스트인 경우:**
-   - `2-Areas/braindumps/YYYY-MM-DD-<slug>.md`에 저장. 가벼운 frontmatter
-     (`created`, `type: braindump`, `tags`)와 원문을 보존.
-   - **첫 캡처를 wiki 페이지로 자동 분류하지 않는다** (CLAUDE.md §7,
-     SCHEMA §8 ≥2 소스 임계값).
-
-4. **보고한다.** 저장 경로, source_type, language, sha256 앞 8자리, 그리고
+3. **보고한다.** 저장 경로, source_type, language, sha256 앞 8자리, 그리고
    "이건 raw 보존이고 durable 지식 승격은 `/ingest`로"라는 다음 단계 안내.
 
-URL과 설명 텍스트가 함께 오면, URL은 raw로·코멘트는 braindump으로 각각 저장한다.
+URL과 설명 코멘트가 함께 오면, URL은 raw로 저장하고, 코멘트는 그대로 두지 말고
+"`/braindump`로 남기세요"라고 안내한다.
