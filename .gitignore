@@ -1,0 +1,16 @@
+# OS cruft
+.DS_Store
+Thumbs.db
+
+# Obsidian (vault를 Obsidian으로 열 경우) — 워크스페이스/캐시만 제외
+.obsidian/workspace*
+.obsidian/cache
+.obsidian/plugins/*/main.js
+.obsidian/plugins/*/styles.css
+.obsidian/plugins/*/manifest.json
+.obsidian/plugins/*/.hotreload
+.trash/
+
+# 로컬 임시
+*.tmp
+*.log
