@@ -74,9 +74,100 @@ durable 지식 승격은 ingest가 별도로 한다.
 1. (선택) 이 repo를 본인 vault 이름으로 fork/복제.
 2. Claude Code를 vault 루트에서 연다 (`CLAUDE.md`가 자동 로드됨).
 3. `3-Resources/wiki/SCHEMA.md` §2 태그 분류 체계를 본인 관심사로 교체.
-4. `/capture <URL>`로 소스를 모으고, 쌓이면 `/ingest`로 승격, `/query`로 회상.
+4. 아래 "사용법" 루프를 돈다 — `/capture` → `/ingest` → `/query`.
 5. (선택) [Obsidian](https://obsidian.md/)으로 같은 폴더를 열면 `[[wikilink]]`
    그래프를 시각적으로 탐색할 수 있다.
+
+## 사용법 — 전체 흐름 예시
+
+핵심 멘탈 모델: **모으는 단계(capture)와 지식으로 만드는 단계(ingest)는
+분리되어 있다.** 무엇이든 일단 `raw/`에 쌓아두고, 충분히 모였을 때 골라서
+wiki 페이지로 승격한다. RAG처럼 매번 재검색하는 게 아니라, 한 번 컴파일된
+wiki를 질의한다.
+
+### 1단계 — 소스를 모은다 (`/capture`)
+
+```
+/capture https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f
+```
+
+→ `3-Resources/wiki/raw/articles/2026-04-04-karpathy-llm-wiki.md` 생성.
+SCHEMA §3.2 frontmatter(`source_url`, `sha256`, `language` 등)가 붙고, 본문은
+**원문 언어 그대로** 보존된다. 같은 sha256이 이미 있으면 "이미 캡처됨"으로
+끝난다(dedup). 이 단계는 아직 wiki 지식이 **아니다.**
+
+생각·메모를 던지면 wiki가 아니라 braindump으로 간다:
+
+```
+/capture LLM-Wiki가 RAG보다 나은 핵심은 비용을 query에서 ingest로 옮기는 것
+```
+
+→ `2-Areas/braindumps/2026-06-28-...md`. 단일 생각은 자동으로 wiki 페이지가
+되지 않는다(SCHEMA §8 ≥2 소스 임계값).
+
+### 2단계 — 지식으로 승격한다 (`/ingest`)
+
+raw가 몇 개 쌓이면:
+
+```
+/ingest
+```
+
+→ `raw/` backlog를 전부 읽고, **≥ 2개 소스에 등장**하거나 **한 소스의 핵심
+주제**인 것만 durable 페이지로 만든다. 예: `entities/andrej-karpathy.md`(외부
+인물) 생성 + `concepts/llm-wiki-pattern.md` 보강. 그다음 `index.md`(카탈로그)와
+`log.md`(감사 로그)를 자동 갱신한다. 임계값에 못 미친 소스는 "왜 안 만들었는지"
+보고만 하고 raw에 남겨둔다.
+
+> raw는 immutable이다. ingest는 raw를 읽기만 하고, 지식은 항상 별도 페이지로
+> 파생한다(SCHEMA §3.2).
+
+### 3단계 — 회상한다 (`/query`)
+
+```
+/query 우리가 LLM-Wiki 패턴을 왜 골랐지?
+```
+
+→ Brain-First 프로토콜(SCHEMA §6)이 `우리/왜` 트리거를 잡아 `index.md`를
+검색하고 `concepts/llm-wiki-pattern.md`를 읽은 뒤, **출처를 인용하며** 답한다:
+"`[[llm-wiki-pattern]]`에 따르면 비용을 query→ingest로 옮겨 지식이 복리로
+누적되기 때문…". 빠른 답만 원하면 `?nowiki`, wiki를 강제로 읽히려면 `?wiki`.
+
+### 4단계 — 점검·보존 (`/lint`, `/save`)
+
+```
+/lint                       # 깨진 링크·frontmatter·고아 페이지·raw drift 점검
+/save 비교 분석은 queries/ 대신 comparisons/ 에 두기로 결정   # 결정을 적절한 위치에 보존
+```
+
+### 한눈에 보는 루프
+
+```
+  웹/생각 ──/capture──▶ raw/ (원문, 불변)
+                          │
+                          └──/ingest──▶ entities·concepts·comparisons·queries/ (durable)
+                                            │           ▲
+                                  /query ◀──┘           └── /lint (건강검진) · /save (결정 보존)
+```
+
+## 일상 리듬 (권장)
+
+- **수시:** 흥미로운 URL/생각을 보는 즉시 `/capture`. 분류·정리는 나중에.
+- **주 1–2회:** `/ingest`로 backlog를 비우며 지식을 컴파일.
+- **필요할 때:** `/query`로 과거 결정·전략·등록 개념을 회상.
+- **월 1회:** `/lint`로 링크·frontmatter·drift 점검.
+- 작업·프로젝트 메모는 wiki가 아니라 `1-Projects/`·`2-Areas/`에 직접 쓴다
+  (영역 분리 — 사람이 관리하는 영역).
+
+## 자주 묻는 것
+
+- **capture와 ingest를 왜 나누나?** 모으는 건 마찰이 0이어야 자주 하게 되고,
+  지식 승격은 신중해야 품질이 유지된다. 둘을 묶으면 둘 다 망가진다.
+- **그냥 wiki에 바로 쓰면 안 되나?** 가능하지만 그러면 출처·중복·모순 관리가
+  깨진다. raw를 거치면 sha256 dedup·provenance·drift 탐지가 공짜로 따라온다.
+- **Obsidian이 꼭 필요한가?** 아니다. 전부 순수 markdown이라 Claude Code만으로
+  완결된다. Obsidian은 `[[wikilink]]` 그래프 시각화용 선택 사항.
+- **태그 8개가 내 관심사와 안 맞는다.** SCHEMA §2를 교체하라 — 기본값일 뿐이다.
 
 ## 더 읽기
 
