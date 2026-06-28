@@ -1,5 +1,6 @@
 ---
-description: Brain-First — wiki를 먼저 읽고 인용과 함께 답한다 (과거 결정·전략·등록된 entity/concept 질문)
+name: query
+description: Brain-First — wiki를 먼저 읽고 인용과 함께 답한다. 과거 결정·전략·방향, 등록된 entity/concept, '우리/내/지난번' 류 회상 질문일 때 사용. 읽기 전용.
 argument-hint: <질문>  [?wiki 강제 | ?nowiki 생략]
 allowed-tools: Read, Glob, Grep
 ---
@@ -38,4 +39,4 @@ $ARGUMENTS
   `/ingest`로 지식을 채울지 제안한다.
 - **범위:** 이 프로토콜은 `wiki/`에만 적용. `2-Areas/`·`1-Projects/` 검색은
   사용자가 명시적으로 요청할 때만.
-- 읽기 전용. 이 커맨드는 vault를 수정하지 않는다.
+- 읽기 전용. 이 스킬은 vault를 수정하지 않는다.

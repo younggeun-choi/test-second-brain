@@ -1,5 +1,6 @@
 ---
-description: 이번 세션의 결정·산출물을 PARA 또는 wiki 규칙에 맞는 위치에 보존
+name: save
+description: 이번 세션의 결정·산출물·지식을 PARA 또는 wiki 규칙에 맞는 위치에 보존한다. raw capture(/capture)·ingest(/ingest)와 헷갈리지 않게, 세션에서 만들어진 가치 있는 결과물을 명시적으로 저장할 때 사용.
 argument-hint: <저장할 결정/산출물 설명>
 allowed-tools: Read, Write, Edit, Bash(date:*), Glob
 ---

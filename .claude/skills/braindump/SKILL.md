@@ -1,5 +1,6 @@
 ---
-description: 생각을 빠르게 포착해 도메인 분류·테마·전략 인사이트·action item으로 구조화 (PARA braindump)
+name: braindump
+description: 생각·메모를 빠르게 포착해 도메인 분류·테마·전략 인사이트·action item으로 구조화해 PARA에 저장. 머릿속을 쏟아내거나 아이디어·회고·결정 고민을 남길 때 사용 (외부 URL/파일 소스는 /capture).
 argument-hint: <쏟아낼 생각 — 비우면 무엇을 적을지 물어봄>
 allowed-tools: Read, Write, Bash(date:*), Glob
 ---

@@ -1,5 +1,6 @@
 ---
-description: wiki health check — 링크·frontmatter·index/log·raw drift·페이지 크기 (SCHEMA §9)
+name: lint
+description: wiki health check — 링크·frontmatter·index/log 일관성·raw drift·페이지 크기 점검 (SCHEMA §9). wiki 정합성 검사·복구가 필요할 때 사용. 기본 리포트 모드, 파괴적 수정은 승인 필요.
 argument-hint: [점검 범위 또는 비워서 전체]
 allowed-tools: Read, Glob, Grep, Bash(shasum:*), Bash(ls:*)
 ---

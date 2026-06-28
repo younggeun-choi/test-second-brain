@@ -1,5 +1,6 @@
 ---
-description: URL/파일을 wiki/raw/ 에 원문 보존 (ingest 아님 · 생각·메모는 /braindump)
+name: capture
+description: URL·파일 등 외부 소스를 wiki/raw/ 에 원문 그대로 보존한다 (ingest·durable 승격 아님). URL·arXiv·YouTube·SNS 링크나 파일 첨부를 raw provenance로 만들 때 사용. 생각·메모는 /braindump.
 argument-hint: <URL>
 allowed-tools: Read, Write, Bash(shasum:*), Bash(date:*), WebFetch
 ---
@@ -18,7 +19,7 @@ $ARGUMENTS
 1. **분류한다.**
    - 입력이 URL이면 → 소스 캡처. (arxiv.org → `raw/papers/`, youtube/threads/x
      같은 영상·SNS → `raw/transcripts/`, 그 외 일반 웹 → `raw/articles/`)
-   - 입력이 자유 텍스트(생각·메모)면 → **이 커맨드의 영역이 아니다.**
+   - 입력이 자유 텍스트(생각·메모)면 → **이 스킬의 영역이 아니다.**
      "생각·메모는 `/braindump`로 처리하세요"라고 안내하고 멈춘다. (capture는
      외부 소스의 원문 보존 전용)
 

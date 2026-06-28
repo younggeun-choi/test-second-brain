@@ -38,7 +38,7 @@ eenaie-second-brain/
 │       └── queries/         저장할 가치가 있는 질의 결과
 ├── 4-Archive/       완료/폐기
 ├── Templates/       PARA 노트 스캐폴드 (순수 markdown)
-├── .claude/commands/  slash command: capture·braindump·ingest·query·lint·save
+├── .claude/skills/    skill: capture·braindump·ingest·query·lint·save (/name 으로 호출)
 └── CLAUDE.md        (이 파일)
 ```
 
@@ -73,11 +73,14 @@ vault는 규칙이 다른 **두 영역**으로 나뉜다.
 | `1-Projects/*.md` | 자유 편집. 권장 파일명 `YYYY-MM <title>.md`. |
 | 그 외 PARA 폴더 | 사용자 편집 영역. 스킬은 읽되 조용히 재작성하지 않는다. |
 
-## 5. Slash Commands
+## 5. Skills (slash 호출)
 
-`.claude/commands/`의 6개 워크플로 동사. SCHEMA를 운영 스펙으로 참조한다.
+`.claude/skills/`의 6개 워크플로 스킬. 각각 `/name`으로 호출하며(예 `/capture`),
+description이 맞으면 Claude가 자동 발동할 수도 있다. SCHEMA를 운영 스펙으로
+참조한다. (구 `.claude/commands/`에서 이관 — Claude Code에서 command는 skill로
+병합됐고, `.claude/skills/<name>/SKILL.md` 직속만 인식된다.)
 
-| 커맨드 | 역할 | 방향 |
+| 스킬 | 역할 | 방향 |
 |--------|------|------|
 | `/capture` | 외부 URL/파일 → `wiki/raw/` 원문 보존 | 소스 캡처 (ingest 아님) |
 | `/braindump` | 생각·메모 → 분류·분석해 `2-Areas/braindumps/` 등에 구조화 | 생각 캡처 |
@@ -119,7 +122,7 @@ deferred`).
 ## 8. 의심스러울 때 (읽기 순서)
 
 1. **`3-Resources/wiki/SCHEMA.md`** — wiki를 건드리는 작업이면.
-2. **호출한 slash command의 본문** — 커맨드가 트리거했으면.
+2. **호출한 스킬의 `SKILL.md` 본문** — 스킬이 트리거했으면.
 3. **사용자에게 묻는다** — 위로 해소 안 되면.
 
 파괴적 행동을 절대 조용히 추측하지 않는다. 삭제/재작성 전에 append·comment·질문.

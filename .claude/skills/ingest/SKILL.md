@@ -1,5 +1,6 @@
 ---
-description: wiki/raw/ backlog를 durable entity/concept/comparison/query 페이지로 승격
+name: ingest
+description: wiki/raw/ backlog의 보존된 소스를 durable entity/concept/comparison/query 페이지로 승격한다. capture 이후 raw 파일을 지식으로 통합·컴파일할 때 사용 (URL fetch는 /capture).
 argument-hint: [raw slug 또는 all — 비우면 backlog 전체]
 allowed-tools: Read, Write, Edit, Bash(ls:*), Bash(date:*), Glob, Grep
 ---

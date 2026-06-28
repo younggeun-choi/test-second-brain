@@ -48,17 +48,18 @@ eenaie-second-brain/
 │       └── queries/         저장할 가치가 있는 질의 결과
 ├── 4-Archive/       완료/폐기
 ├── Templates/       PARA 노트 스캐폴드 (순수 markdown)
-├── .claude/commands/  slash command 6종
+├── .claude/skills/    skill 6종 (/name 으로 호출)
 └── CLAUDE.md        Claude Code 작동 규칙
 ```
 
 PARA 흐름: `0-Inbox/` → 분류 → `1-Projects/` 또는 `2-Areas/` → 완료 시 `4-Archive/`.
 
-## Slash Commands
+## Skills
 
-Claude Code에서 cwd를 이 vault로 두고 바로 쓸 수 있다.
+Claude Code에서 cwd를 이 vault로 두면 `.claude/skills/`의 6종을 `/name`으로 바로
+쓸 수 있다 (description이 맞으면 Claude가 자동 발동하기도 한다).
 
-| 커맨드 | 하는 일 |
+| 스킬 | 하는 일 |
 |--------|---------|
 | `/capture <URL>` | 외부 URL/파일을 `wiki/raw/`에 원문 보존(sha256 dedup). **ingest 아님.** |
 | `/braindump <생각>` | 내 생각·메모를 도메인 분류·테마·전략 인사이트·action item으로 구조화해 `2-Areas/braindumps/` 등에 저장. |
@@ -189,5 +190,5 @@ raw가 몇 개 쌓이면:
 
 ## License
 
-- **패턴·디렉토리 구조·SCHEMA·slash command** — 자유롭게 차용·fork 가능.
+- **패턴·디렉토리 구조·SCHEMA·skill** — 자유롭게 차용·fork 가능.
 - **개별 노트 콘텐츠** — 본인이 추가하는 노트의 저작권은 본인에게.
